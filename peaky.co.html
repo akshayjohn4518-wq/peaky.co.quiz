@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shelby Company Ltd. | Birmingham 1919</title>
+    <!-- Modern Frameworks & Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gold: #c5a059;
+            --dark-gold: #8e6d2f;
+            --bg-black: #0a0a0a;
+            --card-bg: #161616;
+            --text-white: #f5f5f5;
+            --text-gray: #b0b0b0;
+            --accent-red: #8b0000;
+        }
+
+        /* Global Reset & Typography */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .navbar-brand {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+        }
+
+        .gold-text { color: var(--primary-gold); }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: rgba(10, 10, 10, 0.95) !important;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-gold) !important;
+        }
+
+        .nav-link {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-gold) !important;
+        }
+
+        .nav-quiz-btn {
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold) !important;
+            padding: 5px 15px !important;
+            border-radius: 2px;
+            margin-left: 15px;
+        }
+
+        .nav-quiz-btn:hover {
+            background: var(--primary-gold);
+            color: var(--bg-black) !important;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1510511459019-5dee995d3042?auto=format&fit=crop&q=80&w=2070') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* Section Layouts */
+        section { padding: 80px 0; }
+
+        /* Carousel Design */
+        .carousel-item img {
+            height: 600px;
+            object-fit: cover;
+            filter: grayscale(40%) contrast(110%);
+        }
+
+        .carousel-caption-custom {
+            background: rgba(0,0,0,0.7);
+            border-top: 2px solid var(--primary-gold);
+            padding: 15px;
+            margin-top: -5px;
+            text-align: center;
+        }
+
+        /* Quote Cards */
+        .quote-card {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary-gold);
+            padding: 30px;
+            height: 100%;
+            transition: transform 0.3s;
+            font-family: 'Lora', serif;
+            font-style: italic;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-10px);
+            background: #1f1f1f;
+        }
+
+        /* Pricing Cards */
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            padding: 40px 20px;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.1);
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary-gold);
+        }
+
+        /* QUIZ SECTION STYLES */
+        #quiz-section {
+            display: none; /* Hidden by default */
+            min-height: 80vh;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .quiz-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #111;
+            padding: 40px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            position: relative;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 3px;
+            background: #222;
+            margin-bottom: 30px;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-gold);
+            transition: width 0.4s;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #ccc;
+            text-align: left;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary-gold);
+            color: white;
+            background: #222;
+        }
+
+        .option-btn.correct { background: #1b4d1b !important; border-color: #2ecc71 !important; color: white; }
+        .option-btn.wrong { background: #4d1b1b !important; border-color: #e74c3c !important; color: white; }
+
+        #next-btn {
+            background: var(--primary-gold);
+            color: black;
+            font-weight: bold;
+            border: none;
+            padding: 10px 30px;
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Utils */
+        .d-none { display: none !important; }
+
+        footer {
+            background: #050505;
+            border-top: 1px solid #222;
+            padding: 60px 0;
+        }
+
+        .form-control {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 0;
+            padding: 12px;
+        }
+
+        .form-control:focus {
+            background: #222;
+            border-color: var(--primary-gold);
+            color: white;
+            box-shadow: none;
+        }
+
+        .btn-gold {
+            background: var(--primary-gold);
+            color: black;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 0;
+            padding: 10px 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showSection('landing')">SHELBY COMPANY LTD.</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('landing')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#characters">Characters</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#quotes">Quotes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Plans</a></li>
+                    <li class="nav-item"><a class="nav-link nav-quiz-btn" href="#" onclick="showSection('quiz')">Take the Quiz</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- WRAPPER FOR LANDING CONTENT -->
+    <div id="landing-page">
+        <!-- HERO SECTION -->
+        <section id="hero">
+            <div class="hero-content container">
+                <h1 class="display-3 fw-bold mb-3">By Order of the <br><span class="gold-text">Peaky Blinders</span></h1>
+                <p class="lead mb-4 text-gray">Welcome to Birmingham, 1919. Fortune favors the bold.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#characters" class="btn btn-gold">Enter the World</a>
+                    <a href="#" onclick="showSection('quiz')" class="btn btn-outline-light rounded-0 px-4">Test Intelligence</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHARACTERS CAROUSEL -->
+        <section id="characters" class="bg-dark">
+            <div class="container text-center">
+                <h2 class="mb-5 gold-text">The Inner Circle</h2>
+                <div id="shelbyCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner shadow-lg">
+                        <div class="carousel-item active">
+                            <img src="https://www.bosshunting.com.au/wp-content/uploads/2020/04/Rekortmen-dizi-Peaky-Blinders-Yazar%C4%B1-Cillian-Murphy%E2%80%99nin-Tommy-Shelby-Plan%C4%B1n%C4%B1-A%C3%A7%C4%B1klad%C4%B1-1200x900.jpg" class="d-block w-100" alt="Tommy Shelby">
+                            <div class="carousel-caption-custom">
+                                <h4 class="m-0 gold-text">Thomas Shelby</h4>
+                                <small class="text-gray">The Strategist</small>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://wallpapers.com/images/hd/arthur-shelby-peaky-blinders-8k-gz3lph8qes8ptg9w.jpg" class="d-block w-100" alt="Arthur Shelby">
+                            <div class="carousel-caption-custom">
+                                <h4 class="m-0 gold-text">Arthur Shelby</h4>
+                                <small class="text-gray">The Enforcer</small>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://fwmedia.fandomwire.com/wp-content/uploads/2023/08/16112442/joe-cole-peaky-1587136413-e1692199531959.jpg" class="d-block w-100" alt="John Shelby">
+                            <div class="carousel-caption-custom">
+                                <h4 class="m-0 gold-text">John Shelby</h4>
+                                <small class="text-gray">The Wildcard</small>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#shelbyCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#shelbyCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+                
+                <div class="mt-5">
+                    <p class="text-gray mb-3">Atmosphere Courtesy of Birmingham Music</p>
+                    <iframe src="https://open.spotify.com/embed/track/5EQX1oNGRuyWQjxNqTJTSF" width="100%" height="80" frameborder="0" style="max-width: 500px; border-radius: 12px;"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUOTES SECTION -->
+        <section id="quotes">
+            <div class="container">
+                <h2 class="text-center mb-5 gold-text">Famous Words</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="quote-card">
+                            <p>"I don't pay for suits. My suits are on the house or the house burns down."</p>
+                            <cite class="gold-text small">— Thomas Shelby</cite>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="quote-card">
+                            <p>"Good taste is for people who can’t afford sapphires."</p>
+                            <cite class="gold-text small">— Polly Gray</cite>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="quote-card">
+                            <p>"You can’t reason with a tiger when your head is in its mouth."</p>
+                            <cite class="gold-text small">— Alfie Solomons</cite>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section id="pricing" class="bg-dark">
+            <div class="container text-center">
+                <h2 class="mb-5 gold-text">Shelby Business Plans</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="pricing-card">
+                            <h4 class="gold-text">Basic</h4>
+                            <h2 class="my-3">$10<small class="text-muted">/mo</small></h2>
+                            <p class="text-gray">Access to basic archives of the Shelby Company Ltd.</p>
+                            <hr class="border-secondary">
+                            <button class="btn btn-outline-warning w-100">Acquire</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pricing-card featured">
+                            <h4 class="gold-text">Pro</h4>
+                            <h2 class="my-3">$20<small class="text-muted">/mo</small></h2>
+                            <p class="text-gray">Full clearance and intelligence reports on all rival gangs.</p>
+                            <hr class="border-warning">
+                            <button class="btn btn-gold w-100">Join the Family</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pricing-card">
+                            <h4 class="gold-text">Elite</h4>
+                            <h2 class="my-3">$30<small class="text-muted">/mo</small></h2>
+                            <p class="text-gray">Direct line to Cillian Murphy's actual script archives.</p>
+                            <hr class="border-secondary">
+                            <button class="btn btn-outline-warning w-100">The Ultimate Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <footer id="contact">
+            <div class="container text-center">
+                <h2 class="gold-text mb-4">Enlist Today</h2>
+                <p class="text-gray mb-5">By order of the Peaky Blinders, we are expanding.</p>
+                <form class="row g-3 justify-content-center" style="max-width: 600px; margin: 0 auto;">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Agent Name">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="email" class="form-control" placeholder="Secure Email">
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-gold px-5">Submit Credentials</button>
+                    </div>
+                </form>
+                <p class="mt-5 small text-muted">&copy; 2025 Shelby Company Ltd. | Birmingham, UK</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- QUIZ SECTION -->
+    <section id="quiz-section">
+        <div class="container">
+            <div class="quiz-container shadow-lg">
+                <div class="text-center mb-4">
+                    <h2 class="gold-text mb-1">Intelligence Test</h2>
+                    <p class="text-muted small uppercase">Prove you're worthy of the cap</p>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+
+                <div id="quiz-body">
+                    <h4 id="question-text" class="mb-4">Loading question...</h4>
+                    <div id="options-container"></div>
+                    <button id="next-btn" class="mx-auto mt-4">Next Order</button>
+                </div>
+
+                <div id="quiz-result" class="text-center d-none">
+                    <h2 class="gold-text mb-4">Verdict</h2>
+                    <h1 id="result-score" class="display-1 mb-4">0/0</h1>
+                    <p id="result-text" class="lead text-gray mb-4"></p>
+                    <button class="btn btn-gold" onclick="resetQuiz()">Try Again</button>
+                    <button class="btn btn-outline-light ms-2" onclick="showSection('landing')">Back Home</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap & Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // NAVIGATION LOGIC
+        function showSection(section) {
+            const landing = document.getElementById('landing-page');
+            const quizSection = document.getElementById('quiz-section');
+            
+            if(section === 'quiz') {
+                landing.classList.add('d-none');
+                quizSection.style.display = 'block';
+                resetQuiz();
+            } else {
+                landing.classList.remove('d-none');
+                quizSection.style.display = 'none';
+            }
+            window.scrollTo(0,0);
+        }
+
+        // QUIZ LOGIC
+        const quizData = [
+            {
+                q: "Who is the undisputed leader of the Peaky Blinders?",
+                o: ["Arthur Shelby", "Thomas Shelby", "John Shelby", "Alfie Solomons"],
+                a: 1
+            },
+            {
+                q: "What is hidden inside the peak of their caps?",
+                o: ["Gold Coins", "Stiletto Knives", "Razor Blades", "Lockpicks"],
+                a: 2
+            },
+            {
+                q: "In which city does the Shelby empire begin?",
+                o: ["London", "Birmingham", "Liverpool", "Manchester"],
+                a: 1
+            },
+            {
+                q: "Who is the treasurer and matriarch of the family?",
+                o: ["Ada Shelby", "Lizzie Stark", "Grace Burgess", "Polly Gray"],
+                a: 3
+            },
+            {
+                q: "What was Tommy Shelby's rank/role in the Great War?",
+                o: ["General", "Tunneller", "Sniper", "Cavalry"],
+                a: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let canAnswer = true;
+
+        function loadQuestion() {
+            canAnswer = true;
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.style.display = 'none';
+            
+            const q = quizData[currentQuestion];
+            document.getElementById('question-text').innerText = q.q;
+            
+            const optionsBox = document.getElementById('options-container');
+            optionsBox.innerHTML = '';
+            
+            q.o.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = option;
+                btn.onclick = () => selectOption(index, btn);
+                optionsBox.appendChild(btn);
+            });
+
+            // Update Progress
+            const progress = (currentQuestion / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        function selectOption(index, btn) {
+            if(!canAnswer) return;
+            canAnswer = false;
+            
+            const correct = quizData[currentQuestion].a;
+            const options = document.querySelectorAll('.option-btn');
+            
+            if(index === correct) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                options[correct].classList.add('correct');
+            }
+            
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        document.getElementById('next-btn').onclick = () => {
+            currentQuestion++;
+            if(currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        };
+
+        function showResults() {
+            document.getElementById('progress-bar').style.width = '100%';
+            document.getElementById('quiz-body').classList.add('d-none');
+            const resultBox = document.getElementById('quiz-result');
+            resultBox.classList.remove('d-none');
+            
+            document.getElementById('result-score').innerText = `${score}/${quizData.length}`;
+            
+            let msg = "";
+            if(score === quizData.length) msg = "You have the mind of Thomas Shelby himself. Birmingham is yours.";
+            else if(score >= 3) msg = "A solid lieutenant. Arthur would trust you at his back.";
+            else msg = "You're a Copper's informant, aren't you? Get out of Small Heath.";
+            
+            document.getElementById('result-text').innerText = msg;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-body').classList.remove('d-none');
+            document.getElementById('quiz-result').classList.add('d-none');
+            loadQuestion();
+        }
+
+    </script>
+</body>
+</html>
